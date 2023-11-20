@@ -116,6 +116,7 @@ export class Library<U extends User = User, A extends Author = Author, B extends
 
     public removeBookById(bookId: B["id"]): boolean {
         if (this.validateBookId(bookId) === false) throw new Error("Livro não existe")
+        if (this.books.get(bookId)?.isAvailable() === false) throw new Error("Livro emprestado, não pode ser removido")
         return this.books.delete(bookId)
     }
     public removeUserById(userId: U["id"]): boolean {

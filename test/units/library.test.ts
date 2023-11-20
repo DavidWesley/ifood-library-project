@@ -5,17 +5,19 @@ import { User } from "@/models/user.ts"
 import { createUUID } from "@/utils/id.ts"
 import { beforeEach, describe, expect, expectTypeOf, it, vitest } from "vitest"
 
-describe("Library Class", () => {
-  let library: Library
-
-  beforeEach(() => {
-    library = new Library({
+class Helper {
+  static resetLibrary() {
+    return new Library({
       name: "Library",
       address: "123 Main St",
       phone: "555-1234",
       email: "library@example.com"
     })
-  })
+  }
+}
+
+describe("Library Class", () => {
+  let library: Library
 
   // Mock data
   const USER = new User({
@@ -39,6 +41,10 @@ describe("Library Class", () => {
     year: 2021,
     gender: "Adventure",
     author: AUTHOR
+  })
+
+  beforeEach(() => {
+    library = Helper.resetLibrary()
   })
 
   describe("Insert Methods", () => {
@@ -121,6 +127,16 @@ describe("Library Class", () => {
 
         expect(() => library.removeBookById(invalidBookId)).toThrowError("Livro não existe")
       })
+
+      it("should not remove a book that has been borrowed", () => {
+        const book = Book.from(BOOK)
+
+        library.insertUser(USER)
+        library.insertBook(book)
+
+        expect(library.borrowBookToUser(USER.id, book.id)).toBe(true)
+        expect(() => library.removeBookById(book.id)).toThrowError("Livro emprestado")
+      })
     })
 
     describe("removeUserById", () => {
@@ -138,11 +154,12 @@ describe("Library Class", () => {
       })
 
       it("should not remove a user that has borrowed books", () => {
+        const book = Book.from(BOOK)
+
         library.insertUser(USER)
-        library.insertBook(BOOK)
+        library.insertBook(book)
 
-        library.borrowBookToUser(USER.id, BOOK.id)
-
+        expect(library.borrowBookToUser(USER.id, book.id)).not.toBe(false)
         expect(() => library.removeUserById(USER.id)).toThrowError("Usuário possui livros emprestados")
       })
     })
