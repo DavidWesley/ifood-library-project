@@ -120,6 +120,9 @@ export class Library<U extends User = User, A extends Author = Author, B extends
     }
     public removeUserById(userId: U["id"]): boolean {
         if (this.validateUserId(userId) === false) throw new Error("Usuário não existe")
+        if (this.borrowedBooksByUserMap.has(userId) && this.borrowedBooksByUserMap.get(userId)!.size !== 0)
+            throw new Error("Usuário possui livros emprestados")
+
         return this.users.delete(userId)
     }
 

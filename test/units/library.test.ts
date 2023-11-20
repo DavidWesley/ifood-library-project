@@ -165,6 +165,15 @@ describe("Library Class", () => {
 
         expect(() => library.removeUserById(invalidUserId)).toThrowError("Usuário não existe")
       })
+
+      it("should not remove a user that has borrowed books", () => {
+        library.insertUser(USER)
+        library.insertBook(BOOK)
+
+        library.borrowBookToUser(USER.id, BOOK.id)
+
+        expect(() => library.removeUserById(USER.id)).toThrowError("Usuário possui livros emprestados")
+      })
     })
 
     describe("removeAuthorById", () => {
