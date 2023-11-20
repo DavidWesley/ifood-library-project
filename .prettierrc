@@ -1,0 +1,23 @@
+{
+    "tabWidth": 4,
+    "endOfLine": "lf",
+    "useTabs": false,
+    "singleQuote": false,
+    "trailingComma": "none",
+    "semi": false,
+    "printWidth": 120,
+    "overrides": [
+        {
+            "files": "*.test.ts",
+            "options": {
+                "tabWidth": 2
+            }
+        },
+        {
+            "files": ["*.json", "*config*"],
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
+}

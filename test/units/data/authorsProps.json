@@ -1,0 +1,37 @@
+[
+    {
+        "name": "Machado de Assis",
+        "nationality": "Brazilian",
+        "birthDate": "1839-06-21",
+        "email": "machado.assis@email.com",
+        "gender": "male"
+    },
+    {
+        "name": "George Orwell",
+        "nationality": "British",
+        "birthDate": "1903-06-25",
+        "email": "george.orwell@email.com",
+        "gender": "male"
+    },
+    {
+        "name": "Gabriel García Márquez",
+        "nationality": "Colombian",
+        "birthDate": "1927-03-06",
+        "email": "gabriel.garcia@email.com",
+        "gender": "male"
+    },
+    {
+        "name": "J.R.R. Tolkien",
+        "nationality": "British",
+        "birthDate": "1892-01-03",
+        "email": "jrr.tolkien@email.com",
+        "gender": "male"
+    },
+    {
+        "name": "J.K. Rowling",
+        "nationality": "British",
+        "birthDate": "1965-07-31",
+        "email": "jk.rowling@email.com",
+        "gender": "female"
+    }
+]
