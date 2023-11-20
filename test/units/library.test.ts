@@ -5,35 +5,6 @@ import { User } from "@/models/user.ts"
 import { createUUID } from "@/utils/id.ts"
 import { beforeEach, describe, expect, expectTypeOf, it, vitest } from "vitest"
 
-class Helper {
-  static createAndInsertMultiplesUsers(library: Library, quantity = 10) {
-    const users: User[] = []
-    for (let i = 0; i < quantity; i++) {
-      const user = new User({
-        name: `User ${i + 1}`,
-        birthDate: new Date("1990-01-01"),
-        nationality: "US",
-        email: `user${i + 1}@example.com`,
-        gender: "male"
-      })
-      users.push(user)
-    }
-
-    Helper.insertMultiplesUsers(users, library)
-  }
-
-  static createAndInsertMultiplesBooks(library: Library) {
-    const years = [2021, 2022, 2023]
-  }
-
-  static insertMultiplesUsers(users: User[], library: Library) {
-    users.forEach((user) => {
-      library.insertUser(user)
-    })
-    // console.log(library.listUsers())
-  }
-}
-
 describe("Library Class", () => {
   let library: Library
 
@@ -256,7 +227,7 @@ describe("Library Class", () => {
 
       it("should add the book to the user's borrowed books list", () => {
         BOOK.return() // Assume the book is available
-        const otherBook = Book.from(BOOK, BOOK.groupId)
+        const otherBook = Book.from(BOOK, { groupId: BOOK.groupId })
 
         library.insertBook(otherBook)
 
@@ -266,7 +237,7 @@ describe("Library Class", () => {
 
       it("should not add the book to the user's borrowed books list if the book is already borrowed", () => {
         BOOK.borrow() // Assume the book is borrowed
-        const otherBook = Book.from(BOOK, BOOK.groupId)
+        const otherBook = Book.from(BOOK, { groupId: BOOK.groupId })
         otherBook.return() // Assume the other book is available
 
         library.insertBook(otherBook)
@@ -307,7 +278,7 @@ describe("Library Class", () => {
           gender: "female"
         })
 
-        const otherBook = Book.from(BOOK, BOOK.groupId)
+        const otherBook = Book.from(BOOK, { groupId: BOOK.groupId })
 
         library.insertUser(otherUser)
         library.insertBook(otherBook)
